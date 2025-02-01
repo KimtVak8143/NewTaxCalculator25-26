@@ -1,9 +1,23 @@
+// Function to format number with commas
+function formatNumberInput() {
+    let input = document.getElementById("income");
+    let value = input.value.replace(/,/g, ""); // Remove existing commas
+    if (!isNaN(value) && value !== "") {
+        input.value = Number(value).toLocaleString("en-IN"); // Format as Indian number system
+    }
+}
+
+// Function to remove formatting before calculation
+function getRawNumber(value) {
+    return parseFloat(value.replace(/,/g, "")) || 0;
+}
+
 function calculateTax() {
-    const income = parseFloat(document.getElementById("income").value);
+    const income = getRawNumber(document.getElementById("income").value);
     const resultDiv = document.getElementById("result");
     const breakdownDiv = document.getElementById("breakdown");
 
-    if (isNaN(income) || income < 0) {
+    if (income <= 0) {
         resultDiv.innerHTML = '<div class="alert alert-danger">Please enter a valid income!</div>';
         breakdownDiv.innerHTML = '';
         return;
@@ -30,10 +44,10 @@ function calculateTax() {
             tax += taxAmount;
 
             taxDetails.push({
-                range: `${prev_limit.toLocaleString()} - ${slabs[i].limit.toLocaleString()}`,
+                range: `${prev_limit.toLocaleString("en-IN")} - ${slabs[i].limit.toLocaleString("en-IN")}`,
                 rate: `${(slabs[i].rate * 100).toFixed(0)}%`,
-                taxable: `₹${taxableAmount.toLocaleString()}`,
-                tax: `₹${taxAmount.toLocaleString()}`
+                taxable: `₹${taxableAmount.toLocaleString("en-IN")}`,
+                tax: `₹${taxAmount.toLocaleString("en-IN")}`
             });
 
             prev_limit = slabs[i].limit;
@@ -43,7 +57,7 @@ function calculateTax() {
     }
 
     resultDiv.innerHTML = `<div class="alert alert-success">
-        <strong>Total Tax: ₹${tax.toLocaleString()}</strong>
+        <strong>Total Tax: ₹${tax.toLocaleString("en-IN")}</strong>
     </div>`;
 
     let tableHTML = `<table class="table table-bordered mt-3">
@@ -69,4 +83,3 @@ function calculateTax() {
     tableHTML += `</tbody></table>`;
     breakdownDiv.innerHTML = tableHTML;
 }
-
