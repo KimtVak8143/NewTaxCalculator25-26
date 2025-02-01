@@ -18,7 +18,8 @@
         <div class="calculator-box">
             <h2 class="mb-4">Income Tax Calculator</h2>
             <label for="income" class="form-label">Enter Your Annual Income (₹):</label>
-            <input type="number" id="income" class="form-control" placeholder="Enter income">
+            <!-- <input type="number" id="income" class="form-control" placeholder="Enter income"> -->
+            <input type="text" id="income" class="form-control" placeholder="Enter income" oninput="formatNumberInput()">
             <button onclick="calculateTax()" class="btn btn-primary mt-3">Calculate Tax</button>
             <div id="result" class="mt-4"></div>
             <div id="breakdown" class="mt-4"></div>
